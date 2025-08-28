@@ -9,8 +9,9 @@
   <!-- Manifest -->
   <link rel="manifest" href="./manifest.json" />
 
-  <!-- Icono -->
-  <link rel="icon" href="./C:\Users\SALAS\Documents\iconoo.png" />
+  <!-- Favicon e íconos para dispositivos -->
+  <link rel="icon" href="./icon-192.png" />
+  <link rel="apple-touch-icon" href="./icon-512.png" />
 
   <style>
     body {
@@ -22,10 +23,7 @@
       max-width: 1200px;
       margin: auto;
     }
-    h1 { 
-      color: #10b981; 
-      text-align: center;
-    }
+    h1 { color: #10b981; text-align: center; }
     .routine {
       border: 1px solid #1f2c3f;
       border-radius: 10px;
@@ -74,21 +72,12 @@
 
     /* 📱 Responsive */
     @media (min-width: 600px) {
-      #addForm input, #addForm select {
-        flex: 1 1 calc(50% - .5rem);
-      }
-      #addForm button {
-        flex: 1 1 100%;
-      }
+      #addForm input, #addForm select { flex: 1 1 calc(50% - .5rem); }
+      #addForm button { flex: 1 1 100%; }
     }
     @media (min-width: 900px) {
-      #addForm {
-        flex-direction: row;
-        align-items: flex-start;
-      }
-      #addForm input, #addForm select {
-        flex: 1 1 calc(25% - .5rem);
-      }
+      #addForm { flex-direction: row; align-items: flex-start; }
+      #addForm input, #addForm select { flex: 1 1 calc(25% - .5rem); }
       #addForm button {
         flex: 1 1 auto;
         max-width: 200px;
