@@ -2,7 +2,9 @@ const CACHE_NAME = 'rutinas-fit-cache-v1';
 const ASSETS = [
   './',
   './index.html',
-  './manifest.json'
+  './manifest.json',
+  './icon-192.png',
+  './icon-512.png'
 ];
 
 // Instalar y guardar en caché
