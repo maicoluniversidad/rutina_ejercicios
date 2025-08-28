@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rutinas Fit</title>
+  <meta name="theme-color" content="#10b981" />
+  <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiUnV0aW5hcyBGaXQiLCJzaG9ydF9uYW1lIjoiUnV0aW5hcyIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjMGExZjE3IiwidGhlbWVfY29sb3IiOiIjMTBiOTgxIiwiaWNvbnMiOlt7InNyYyI6Imljb25zL2ljb24tMTkyLnBuZyIsInNpemVzIjoiMTkyeDE5MiIsInR5cGUiOiJpbWFnZS9wbmciLCJwdXJwb3NlIjoiYW55IG1hc2thYmxlIn0seyJzcmMiOiJpY29ucy9pY29uLTUxMi5wbmciLCJzaXplcyI6IjUxMng1MTIiLCJ0eXBlIjoiaW1hZ2UvcG5nIiwicHVycG9zZSI6ImFueSBtYXNrYWJsZSJ9XX0=" />
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 1rem;
+      background: #0a0f17;
+      color: #e6eef7;
+    }
+    h1 { color: #10b981; }
+    .routine {
+      border: 1px solid #1f2c3f;
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      background: #111a28;
+    }
+    .routine h2 { margin: 0 0 .5rem; }
+    .routine ul { padding-left: 1.2rem; }
+    .routine button {
+      background: #10b981;
+      color: white;
+      border: none;
+      padding: .5rem .8rem;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: .5rem;
+    }
+    #addForm input, #addForm select {
+      padding: .5rem;
+      margin: .3rem 0;
+      width: 100%;
+      border-radius: 6px;
+      border: 1px solid #1f2c3f;
+      background: #0c121d;
+      color: #e6eef7;
+    }
+    #addForm button {
+      background: #10b981;
+      color: white;
+      border: none;
+      padding: .5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: .5rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Rutinas Fit</h1>
+
+  <form id="addForm">
+    <input type="text" id="routineName" placeholder="Nombre de rutina" required />
+    <input type="text" id="exerciseName" placeholder="Ejercicio (ej. Sentadillas)" required />
+    <select id="exerciseType">
+      <option value="reps">Repeticiones</option>
+      <option value="time">Tiempo (segundos)</option>
+    </select>
+    <input type="number" id="exerciseValue" placeholder="Cantidad (reps o segundos)" required />
+    <button type="submit">Agregar rutina</button>
+  </form>
+
+  <div id="routineList"></div>
+
+  <script>
+    const routineList = document.getElementById('routineList');
+    const form = document.getElementById('addForm');
+    const routines = JSON.parse(localStorage.getItem('rutinas') || '[]');
+
+    function saveRoutines() {
+      localStorage.setItem('rutinas', JSON.stringify(routines));
+    }
+
+    function renderRoutines() {
+      routineList.innerHTML = '';
+      routines.forEach((r, i) => {
+        const div = document.createElement('div');
+        div.className = 'routine';
+        div.innerHTML = `
+          <h2>${r.name}</h2>
+          <ul>
+            ${r.exercises.map(ex => `<li>${ex.name} — ${ex.type === 'reps' ? ex.value + ' reps' : ex.value + 's'}</li>`).join('')}
+          </ul>
+          <button onclick="startRoutine(${i})">Empezar</button>
+        `;
+        routineList.appendChild(div);
+      });
+    }
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const name = document.getElementById('routineName').value.trim();
+      const exName = document.getElementById('exerciseName').value.trim();
+      const exType = document.getElementById('exerciseType').value;
+      const exValue = parseInt(document.getElementById('exerciseValue').value);
+      if (!name || !exName || !exValue) return;
+
+      let routine = routines.find(r => r.name === name);
+      if (!routine) {
+        routine = { name, exercises: [] };
+        routines.push(routine);
+      }
+      routine.exercises.push({ name: exName, type: exType, value: exValue });
+      saveRoutines();
+      renderRoutines();
+      form.reset();
+    });
+
+    function startRoutine(index) {
+      const r = routines[index];
+      alert(`Iniciando rutina: ${r.name}\nEjercicios:\n` + r.exercises.map(ex => `• ${ex.name} (${ex.type === 'reps' ? ex.value + ' reps' : ex.value + 's'})`).join('\n'));
+    }
+
+    renderRoutines();
+
+    // Service Worker para modo offline
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('data:text/javascript;base64,dmFyIENBQ0hFX05BTUUgPSAnZml0LXB3YS1jYWNoZSc7CmNvbnN0IEFzc2V0cyA9IFsKICAnLi8nLAogICcvaW5kZXguaHRtbCcsCiAgJy9zdHlsZS5jc3MnLAogICcvYXBwLmpzJwogXTsKc2VsZi5hZGRFdmVudExpc3RlbmVyKCdpbnN0YWxsJywgZXZlbnQgPT4gewogIGV2ZW50LndhaXRVbnRpbChjYWNoZXMub3BlbihDQUNIRV9OQU1FKSkudGhlbiggY2FjaGUgPT4gY2FjaGUuYWRkQWxsKEFzc2V0cykgKSk7CiAgc2VsZi5za2lwV2FpdGluZygpOwp9KTsKc2VsZi5hZGRFdmVudExpc3RlbmVyKCdhY3RpdmF0ZScsIGV2ZW50ID0+IHsKICBldmVudC53YWl0VW50aWwoY2FjaGVzLmtleXMoKS50aGVuKGtleXMgPT4gUHJvbWlzZS5hbGwoa2V5cy5maWx0ZXIoaCA9PiBoICE9IENBQ0hFX05BTUUpLm1hcChrID0+IGNhY2hlcy5kZWxldGUoaykpKSkpOwogIHNlbGYuY2xpZW50cy5jbGFpbSgpOwp9KTsKc2VsZi5hZGRFdmVudExpc3RlbmVyKCdmZXRjaCcsIGV2ZW50ID0+IHsKICBpZiAoZXZlbnQucmVxdWVzdC5tZXRob2QgIT09ICdHRVQnKSByZXR1cm47CiAgZXZlbnQucmVzcG9uZFdpdGgoY2FjaGVzLm1hdGNoKGV2ZW50LnJlcXVlc3QpKTsKfSk7');
+    }
+  </script>
+</body>
+</html>
