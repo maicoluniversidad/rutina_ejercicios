@@ -13,50 +13,111 @@
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/6891/6891217.png" />
 
   <style>
-    body {
-      font-family: sans-serif;
-      margin: 0;
-      padding: 1rem;
-      background: #0a0f17;
-      color: #e6eef7;
-    }
-    h1 { color: #10b981; }
-    .routine {
-      border: 1px solid #1f2c3f;
-      border-radius: 10px;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      background: #111a28;
-    }
-    .routine h2 { margin: 0 0 .5rem; }
-    .routine ul { padding-left: 1.2rem; }
-    .routine button {
-      background: #10b981;
-      color: white;
-      border: none;
-      padding: .5rem .8rem;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: .5rem;
-    }
-    #addForm input, #addForm select {
-      padding: .5rem;
-      margin: .3rem 0;
-      width: 100%;
-      border-radius: 6px;
-      border: 1px solid #1f2c3f;
-      background: #0c121d;
-      color: #e6eef7;
-    }
-    #addForm button {
-      background: #10b981;
-      color: white;
-      border: none;
-      padding: .5rem;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: .5rem;
-    }
+body {
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+  margin: 0;
+  padding: 2rem;
+  background: #0a0f17;
+  color: #e6eef7;
+  line-height: 1.6;
+}
+
+/* Título principal */
+h1 {
+  color: #10b981;
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  letter-spacing: 1px;
+}
+
+/* Rutina individual */
+.routine {
+  background: #111a28;
+  border: 1px solid #1f2c3f;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.routine:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.routine h2 {
+  margin: 0 0 0.8rem;
+  font-size: 1.4rem;
+  color: #10b981;
+}
+
+.routine ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Botón dentro de rutina */
+.routine button {
+  background: #10b981;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.routine button:hover {
+  background: #0e8f6f;
+}
+
+/* Formulario de agregar rutina */
+#addForm {
+  background: #111a28;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #1f2c3f;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  margin-top: 2rem;
+}
+
+#addForm input,
+#addForm select {
+  padding: 0.6rem;
+  margin: 0.5rem 0;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #1f2c3f;
+  background: #0c121d;
+  color: #e6eef7;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+#addForm input:focus,
+#addForm select:focus {
+  border-color: #10b981;
+  outline: none;
+}
+
+#addForm button {
+  background: #10b981;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 1rem;
+  transition: background 0.3s ease;
+}
+
+#addForm button:hover {
+  background: #0e8f6f;
+}
      @media (min-width: 600px) {
       #addForm input, #addForm select {
         flex: 1 1 calc(50% - .5rem);
