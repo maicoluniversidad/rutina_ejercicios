@@ -5,7 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rutinas Fit</title>
   <meta name="theme-color" content="#10b981" />
-  <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiUnV0aW5hcyBGaXQiLCJzaG9ydF9uYW1lIjoiUnV0aW5hcyIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjMGExZjE3IiwidGhlbWVfY29sb3IiOiIjMTBiOTgxIiwiaWNvbnMiOlt7InNyYyI6Imljb25zL2ljb24tMTkyLnBuZyIsInNpemVzIjoiMTkyeDE5MiIsInR5cGUiOiJpbWFnZS9wbmciLCJwdXJwb3NlIjoiYW55IG1hc2thYmxlIn0seyJzcmMiOiJpY29ucy9pY29uLTUxMi5wbmciLCJzaXplcyI6IjUxMng1MTIiLCJ0eXBlIjoiaW1hZ2UvcG5nIiwicHVycG9zZSI6ImFueSBtYXNrYWJsZSJ9XX0=" />
+
+  <!-- Manifest -->
+  <link rel="manifest" href="./manifest.json" />
+
+  <!-- Icono para fallback -->
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/6891/6891217.png" />
+
   <style>
     body {
       font-family: sans-serif;
@@ -120,9 +126,11 @@
 
     renderRoutines();
 
-    // Service Worker para modo offline
+    // Registrar Service Worker
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('data:text/javascript;base64,dmFyIENBQ0hFX05BTUUgPSAnZml0LXB3YS1jYWNoZSc7CmNvbnN0IEFzc2V0cyA9IFsKICAnLi8nLAogICcvaW5kZXguaHRtbCcsCiAgJy9zdHlsZS5jc3MnLAogICcvYXBwLmpzJwogXTsKc2VsZi5hZGRFdmVudExpc3RlbmVyKCdpbnN0YWxsJywgZXZlbnQgPT4gewogIGV2ZW50LndhaXRVbnRpbChjYWNoZXMub3BlbihDQUNIRV9OQU1FKSkudGhlbiggY2FjaGUgPT4gY2FjaGUuYWRkQWxsKEFzc2V0cykgKSk7CiAgc2VsZi5za2lwV2FpdGluZygpOwp9KTsKc2VsZi5hZGRFdmVudExpc3RlbmVyKCdhY3RpdmF0ZScsIGV2ZW50ID0+IHsKICBldmVudC53YWl0VW50aWwoY2FjaGVzLmtleXMoKS50aGVuKGtleXMgPT4gUHJvbWlzZS5hbGwoa2V5cy5maWx0ZXIoaCA9PiBoICE9IENBQ0hFX05BTUUpLm1hcChrID0+IGNhY2hlcy5kZWxldGUoaykpKSkpOwogIHNlbGYuY2xpZW50cy5jbGFpbSgpOwp9KTsKc2VsZi5hZGRFdmVudExpc3RlbmVyKCdmZXRjaCcsIGV2ZW50ID0+IHsKICBpZiAoZXZlbnQucmVxdWVzdC5tZXRob2QgIT09ICdHRVQnKSByZXR1cm47CiAgZXZlbnQucmVzcG9uZFdpdGgoY2FjaGVzLm1hdGNoKGV2ZW50LnJlcXVlc3QpKTsKfSk7');
+      navigator.serviceWorker.register('./service-worker.js')
+        .then(() => console.log('✅ Service Worker registrado'))
+        .catch(err => console.error('❌ Error registrando Service Worker:', err));
     }
   </script>
 </body>
